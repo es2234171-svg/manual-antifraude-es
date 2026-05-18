@@ -129,6 +129,14 @@
 <script src="assets/js/5f6e19ce87fa20b5.js" async=""></script><!-- tracking scripts removed (clarity + utmify) --><meta property="og:image" content="assets/placeholders/og-image.svg">
 <meta property="twitter:image" content="assets/placeholders/og-image.svg">
 <title>Manual Antifraude | Compras seguras en Europa</title>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4C9YMSCF0Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4C9YMSCF0Z');
+</script>
 </head>
 
 <body>
@@ -3888,6 +3896,72 @@
   });
 
   preloadObserver.observe(section);
+})();
+</script><script>
+(function () {
+  "use strict";
+
+  function trackEvent(name, params) {
+    if (typeof window.gtag !== "function") return;
+    window.gtag("event", name, params || {});
+  }
+
+  document.addEventListener("click", function (event) {
+    var link = event.target.closest("a");
+    if (!link) return;
+
+    var href = link.getAttribute("href") || "";
+    var text = (link.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
+
+    if (href.indexOf("wa.me/") !== -1) {
+      trackEvent("generate_lead", {
+        method: "whatsapp",
+        event_category: "lead",
+        event_label: text || "WhatsApp"
+      });
+      return;
+    }
+
+    if (link.classList.contains("framer-btn-container") || text.indexOf("QUIERO") !== -1 || href.indexOf("promo-card-section") !== -1) {
+      trackEvent("cta_click", {
+        event_category: "engagement",
+        event_label: text || href || "CTA"
+      });
+    }
+  });
+
+  if (!("IntersectionObserver" in window)) return;
+
+  var sections = [
+    { selector: ".hero-section", name: "hero" },
+    { selector: ".clients-section", name: "dolor_y_depoimentos" },
+    { selector: ".steps-section", name: "aprendizaje" },
+    { selector: ".modules-section", name: "modulos" },
+    { selector: "#bonus-section", name: "bonos" },
+    { selector: "#promo-card-section", name: "oferta" },
+    { selector: ".final-call-section", name: "llamada_final" }
+  ];
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      trackEvent("section_view", {
+        event_category: "engagement",
+        section_name: entry.target.getAttribute("data-track-section") || "section"
+      });
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.35,
+    rootMargin: "0px 0px -80px 0px"
+  });
+
+  sections.forEach(function (item) {
+    var el = document.querySelector(item.selector);
+    if (!el) return;
+    el.setAttribute("data-track-section", item.name);
+    observer.observe(el);
+  });
 })();
 </script></body></html>
 

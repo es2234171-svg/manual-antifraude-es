@@ -2584,7 +2584,69 @@
         .cta-button:hover .arrow-icon {
           opacity: 1;
         }
-      </style><div class="mx-auto relative z-10 mobile-container-standard" style="max-width: 1200px;"><div class="hidden lg:grid lg:grid-cols-12 gap-14 items-start"><div class="lg:col-span-6"><h2 class="mobile-title-standard" style="font-family: var(--font-title); letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255); margin-bottom: 24px;"><span style="display: block;">QUIÉN ESCRIBIÓ EL</span><span style="display: block;">MANUAL <span class="text-gradient-orange font-bold" style="font-family: inherit;">ANTIFRAUDE</span></span></h2><div style="max-width: 560px;"><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 16px;">Soy Pedro Henrique y siempre me ha gustado comprar online. Por la comodidad, por recibirlo todo en casa y por la sensación de encontrar buenos precios sin tener que salir.</p><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 16px;">Pero con el tiempo me di cuenta de que la compra no siempre terminaba en el precio anunciado. Cargos inesperados, retrasos en la entrega, paquetes retenidos, falta de transparencia en la página de pago y esa desconfianza antes de introducir la tarjeta empezaron a repetirse. Y lo peor: vi que no me pasaba solo a mí. Amigos, familiares y muchas personas en España vivían la misma frustración.</p><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 16px;">Ahí fue cuando empecé a estudiar de verdad cómo funcionan las tiendas, el IVA, las aduanas, las suscripciones ocultas, las señales de fraude y los derechos del consumidor. Cosas importantes que nadie me explicó de forma sencilla, ni siquiera cuando más lo necesitaba.</p><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230);">Ahora que entiendo ese camino, he creado el Manual Antifraude para compartirlo por un precio muy bajo con quienes aman comprar online, pero se han cansado de hacerlo con miedo. Espero que te ayude a recuperar la confianza, saber exactamente qué revisar y no volver a caer en estas trampas.</p></div></div><div class="lg:col-span-6 flex justify-center lg:justify-end"><img src="assets/images/expert.png" alt="Especialista en compras seguras en Europa" loading="lazy" decoding="async" style="width: 100%; max-width: 460px; height: auto; object-fit: contain; border-radius: 18px; border: 1px solid rgb(51, 51, 51); background: rgb(10, 10, 10);"></div></div><div class="lg:hidden text-center"><div class="mb-6"><h2 class="section-title-standard text-white about-mobile-pad">QUIÉN ESCRIBIÓ EL <span class="mobile-green-highlight font-bold">MANUAL ANTIFRAUDE?</span></h2></div><img data-edit="IMG_247" src="assets/images/expert.png" alt="Especialista en compras seguras en Europa" loading="lazy" decoding="async" style="display: block; width: 100vw; max-width: 390px; height: auto; object-fit: cover; margin-bottom: 24px; margin-left: 50%; transform: translateX(-50%);"><div class="mobile-text-section about-mobile-description" style="padding-left: 20px; padding-right: 20px;"><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 14px;">Soy Pedro Henrique y siempre me ha gustado comprar online por la comodidad de recibirlo todo en casa.</p><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 14px;">Pero los cargos sorpresa, los retrasos, la falta de transparencia y la desconfianza antes de pagar empezaron a pesar. Me di cuenta de que mucha gente en España sufría la misma inseguridad.</p><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 14px;">Por eso empecé a estudiar cómo funcionan el IVA, las aduanas, las tiendas falsas, las suscripciones ocultas y las formas de protegerse, cosas que nadie me enseñó de forma sencilla.</p><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230);">Creé este Manual por un precio muy bajo para ayudar a quienes aman comprar online, pero quieren comprar con confianza y no volver a caer en estas trampas.</p></div></div></div></section><style>
+
+        .about-copy-bokeh {
+          position: relative;
+          isolation: isolate;
+        }
+
+        .about-copy-bokeh > p {
+          position: relative;
+          z-index: 2;
+          text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
+        }
+
+        .about-bokeh-layer {
+          position: absolute;
+          inset: -26px -18px;
+          z-index: 1;
+          overflow: hidden;
+          pointer-events: none;
+          contain: layout paint;
+        }
+
+        .about-bokeh-dot {
+          position: absolute;
+          width: var(--about-bokeh-size, 4px);
+          height: var(--about-bokeh-size, 4px);
+          left: var(--about-bokeh-left, 50%);
+          top: var(--about-bokeh-top, 50%);
+          border-radius: 999px;
+          background: rgba(255, 106, 0, 0.42);
+          opacity: 0;
+          transform: translate3d(0, 14px, 0) scale(0.8);
+          animation: aboutBokehFloat var(--about-bokeh-duration, 9s) ease-in-out infinite;
+          animation-delay: var(--about-bokeh-delay, 0s);
+          box-shadow: 0 0 10px rgba(255, 106, 0, 0.28);
+        }
+
+        .about-bokeh-dot:nth-child(3n) {
+          background: rgba(255, 174, 54, 0.34);
+          box-shadow: 0 0 8px rgba(255, 174, 54, 0.22);
+        }
+
+        @keyframes aboutBokehFloat {
+          0%, 100% {
+            opacity: 0;
+            transform: translate3d(0, 14px, 0) scale(0.78);
+          }
+          22%, 70% {
+            opacity: 0.52;
+          }
+          50% {
+            opacity: 0.22;
+            transform: translate3d(0, -18px, 0) scale(1);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .about-bokeh-dot {
+            animation: none !important;
+            opacity: 0.18;
+            transform: none;
+          }
+        }
+      </style><div class="mx-auto relative z-10 mobile-container-standard" style="max-width: 1200px;"><div class="hidden lg:grid lg:grid-cols-12 gap-14 items-start"><div class="lg:col-span-6"><h2 class="mobile-title-standard" style="font-family: var(--font-title); letter-spacing: 0.02em; text-transform: uppercase; color: rgb(255, 255, 255); margin-bottom: 24px;"><span style="display: block;">QUIÉN ESCRIBIÓ EL</span><span style="display: block;">MANUAL <span class="text-gradient-orange font-bold" style="font-family: inherit;">ANTIFRAUDE</span></span></h2><div class="about-copy-bokeh" style="max-width: 560px;"><div class="about-bokeh-layer" data-about-bokeh="12" aria-hidden="true"></div><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 16px;">Soy Pedro Henrique y siempre me ha gustado comprar online. Por la comodidad, por recibirlo todo en casa y por la sensación de encontrar buenos precios sin tener que salir.</p><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 16px;">Pero con el tiempo me di cuenta de que la compra no siempre terminaba en el precio anunciado. Cargos inesperados, retrasos en la entrega, paquetes retenidos, falta de transparencia en la página de pago y esa desconfianza antes de introducir la tarjeta empezaron a repetirse. Y lo peor: vi que no me pasaba solo a mí. Amigos, familiares y muchas personas en España vivían la misma frustración.</p><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 16px;">Ahí fue cuando empecé a estudiar de verdad cómo funcionan las tiendas, el IVA, las aduanas, las suscripciones ocultas, las señales de fraude y los derechos del consumidor. Cosas importantes que nadie me explicó de forma sencilla, ni siquiera cuando más lo necesitaba.</p><p style="font-family: Sora, sans-serif; font-size: 18px; line-height: 1.65; color: rgb(230, 230, 230);">Ahora que entiendo ese camino, he creado el Manual Antifraude para compartirlo por un precio muy bajo con quienes aman comprar online, pero se han cansado de hacerlo con miedo. Espero que te ayude a recuperar la confianza, saber exactamente qué revisar y no volver a caer en estas trampas.</p></div></div><div class="lg:col-span-6 flex justify-center lg:justify-end"><img src="assets/images/expert.png" alt="Especialista en compras seguras en Europa" loading="lazy" decoding="async" style="width: 100%; max-width: 460px; height: auto; object-fit: contain; border-radius: 18px; border: 1px solid rgb(51, 51, 51); background: rgb(10, 10, 10);"></div></div><div class="lg:hidden text-center"><div class="mb-6"><h2 class="section-title-standard text-white about-mobile-pad">QUIÉN ESCRIBIÓ EL <span class="mobile-green-highlight font-bold">MANUAL ANTIFRAUDE?</span></h2></div><img data-edit="IMG_247" src="assets/images/expert.png" alt="Especialista en compras seguras en Europa" loading="lazy" decoding="async" style="display: block; width: 100vw; max-width: 390px; height: auto; object-fit: cover; margin-bottom: 24px; margin-left: 50%; transform: translateX(-50%);"><div class="mobile-text-section about-mobile-description about-copy-bokeh" style="padding-left: 20px; padding-right: 20px;"><div class="about-bokeh-layer" data-about-bokeh="8" aria-hidden="true"></div><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 14px;">Soy Pedro Henrique y siempre me ha gustado comprar online por la comodidad de recibirlo todo en casa.</p><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 14px;">Pero los cargos sorpresa, los retrasos, la falta de transparencia y la desconfianza antes de pagar empezaron a pesar. Me di cuenta de que mucha gente en España sufría la misma inseguridad.</p><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230); margin-bottom: 14px;">Por eso empecé a estudiar cómo funcionan el IVA, las aduanas, las tiendas falsas, las suscripciones ocultas y las formas de protegerse, cosas que nadie me enseñó de forma sencilla.</p><p style="font-family: Sora, sans-serif; font-size: 16px; line-height: 1.65; color: rgb(230, 230, 230);">Creé este Manual por un precio muy bajo para ayudar a quienes aman comprar online, pero quieren comprar con confianza y no volver a caer en estas trampas.</p></div></div></div></section><style>
       @media (max-width: 768px) {
         .about-mobile-pad {
           padding-left: 6px !important;
@@ -3668,6 +3730,55 @@
 (function () {
   "use strict";
 
+  var layers = document.querySelectorAll(".about-bokeh-layer[data-about-bokeh]");
+  if (!layers.length) return;
+
+  function createDots(layer) {
+    if (layer.getAttribute("data-bokeh-ready") === "true") return;
+    layer.setAttribute("data-bokeh-ready", "true");
+
+    var count = parseInt(layer.getAttribute("data-about-bokeh") || "10", 10);
+    var fragment = document.createDocumentFragment();
+
+    for (var i = 0; i < count; i += 1) {
+      var dot = document.createElement("span");
+      var size = 2 + Math.random() * 4;
+      dot.className = "about-bokeh-dot";
+      dot.style.setProperty("--about-bokeh-size", size.toFixed(1) + "px");
+      dot.style.setProperty("--about-bokeh-left", (8 + Math.random() * 84).toFixed(2) + "%");
+      dot.style.setProperty("--about-bokeh-top", (6 + Math.random() * 88).toFixed(2) + "%");
+      dot.style.setProperty("--about-bokeh-duration", (7 + Math.random() * 6).toFixed(2) + "s");
+      dot.style.setProperty("--about-bokeh-delay", (Math.random() * -8).toFixed(2) + "s");
+      fragment.appendChild(dot);
+    }
+
+    layer.appendChild(fragment);
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    layers.forEach(createDots);
+    return;
+  }
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      createDots(entry.target);
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0,
+    rootMargin: "240px 0px"
+  });
+
+  layers.forEach(function (layer) {
+    observer.observe(layer);
+  });
+})();
+</script><script>
+(function () {
+  "use strict";
+
   var section = document.querySelector(".modules-section");
   if (!section) return;
 
@@ -3779,6 +3890,7 @@
   preloadObserver.observe(section);
 })();
 </script></body></html>
+
 
 
 

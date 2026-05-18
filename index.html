@@ -3901,10 +3901,29 @@
 (function () {
   "use strict";
 
+  var urlParams = new URLSearchParams(window.location.search);
+
+  function getTrafficData() {
+    return {
+      pagina: window.location.pathname,
+      origem_referencia: document.referrer || "direto_ou_desconhecido",
+      utm_source: urlParams.get("utm_source") || "",
+      utm_medium: urlParams.get("utm_medium") || "",
+      utm_campaign: urlParams.get("utm_campaign") || "",
+      utm_content: urlParams.get("utm_content") || "",
+      utm_term: urlParams.get("utm_term") || ""
+    };
+  }
+
   function trackEvent(name, params) {
     if (typeof window.gtag !== "function") return;
-    window.gtag("event", name, params || {});
+    window.gtag("event", name, Object.assign(getTrafficData(), params || {}));
   }
+
+  trackEvent("pagina_carregada", {
+    categoria_evento: "visita",
+    rotulo_evento: "Página de vendas carregada"
+  });
 
   document.addEventListener("click", function (event) {
     var link = event.target.closest("a");
@@ -3914,18 +3933,20 @@
     var text = (link.textContent || "").replace(/\s+/g, " ").trim().slice(0, 80);
 
     if (href.indexOf("wa.me/") !== -1) {
-      trackEvent("generate_lead", {
-        method: "whatsapp",
-        event_category: "lead",
-        event_label: text || "WhatsApp"
+      trackEvent("clique_whatsapp_lead", {
+        categoria_evento: "lead",
+        metodo_contato: "whatsapp",
+        rotulo_evento: text || "WhatsApp",
+        numero_destino: "5511959882918"
       });
       return;
     }
 
     if (link.classList.contains("framer-btn-container") || text.indexOf("QUIERO") !== -1 || href.indexOf("promo-card-section") !== -1) {
-      trackEvent("cta_click", {
-        event_category: "engagement",
-        event_label: text || href || "CTA"
+      trackEvent("clique_cta", {
+        categoria_evento: "engajamento",
+        rotulo_evento: text || href || "CTA",
+        destino_cta: href || ""
       });
     }
   });
@@ -3933,21 +3954,21 @@
   if (!("IntersectionObserver" in window)) return;
 
   var sections = [
-    { selector: ".hero-section", name: "hero" },
-    { selector: ".clients-section", name: "dolor_y_depoimentos" },
-    { selector: ".steps-section", name: "aprendizaje" },
-    { selector: ".modules-section", name: "modulos" },
-    { selector: "#bonus-section", name: "bonos" },
-    { selector: "#promo-card-section", name: "oferta" },
-    { selector: ".final-call-section", name: "llamada_final" }
+    { selector: ".hero-section", name: "inicio_da_pagina" },
+    { selector: ".clients-section", name: "dor_e_depoimentos" },
+    { selector: ".steps-section", name: "aprendizado_do_manual" },
+    { selector: ".modules-section", name: "modulos_do_manual" },
+    { selector: "#bonus-section", name: "bonus" },
+    { selector: "#promo-card-section", name: "bloco_de_oferta" },
+    { selector: ".final-call-section", name: "chamada_final" }
   ];
 
   var observer = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
       if (!entry.isIntersecting) return;
-      trackEvent("section_view", {
-        event_category: "engagement",
-        section_name: entry.target.getAttribute("data-track-section") || "section"
+      trackEvent("visualizou_secao", {
+        categoria_evento: "engajamento",
+        nome_secao: entry.target.getAttribute("data-track-section") || "secao"
       });
       observer.unobserve(entry.target);
     });

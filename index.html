@@ -1689,7 +1689,7 @@
 })();
 </script>
 <section data-edit="BG_020" class="new-banner-section py-5 lg:py-[50px]" style="background: transparent; overflow: hidden; margin: 0px; padding: 0px; width: 100%;"><div style="width:100%; background:#ffffff; padding:40px 20px; text-align:center;"><p style="font-family: Aldrich, sans-serif; font-size: clamp(22px,4vw,40px); font-weight:700; color:#000; text-transform:uppercase; letter-spacing:0.05em; margin:0;">ESTO NO ACABA AQUÍ</p></div><!-- SECTION: S11 -->
-<section data-edit="BG_021" id="bonus-section" class="bonus-section section pt-[10px] pb-10 md:py-10 lg:py-[50px]" style="background: rgb(0, 0, 0);"><div class="container mobile-container-standard" style="max-width: 1200px; margin: 0px auto;"><h2 class="hidden md:block bonus-title-desktop"><span class="bonus-title-line">AL CONSEGUIR EL MANUAL AHORA,<br>TE LLEVAS <span class="text-gradient-orange font-bold" style="font-family: var(--font-title);">3 BONOS EXCLUSIVOS</span></span></h2><div class="hidden md:block bonus-subtitle-desktop" style="text-transform: none;">Para proteger tus compras y eliminar sorpresas antes de pagar.</div><div class="md:hidden mb-8"><h2 class="text-white bonus-mobile-pad text-center" style="font-size: 26px; margin-bottom: 0px; line-height: 1.2; font-family: &quot;Space Grotesk&quot;, sans-serif; text-transform: uppercase; display: block; width: 100%;">AL CONSEGUIR EL MANUAL AHORA, TE LLEVAS <br><span class="mobile-green-highlight text-gradient-orange font-bold">3 BONOS EXCLUSIVOS</span></h2><p class="section-subtitle-standard bonus-mobile-pad" style="margin-top: 8px;">Para proteger tus compras y eliminar sorpresas antes de pagar.</p></div><div class="bonus-cards-container" style="max-width: 100%; margin-top: clamp(48px, 8vw, 64px);"><div class="
+<section data-edit="BG_021" id="bonus-section" class="bonus-section section pt-[10px] pb-10 md:py-10 lg:py-[50px]" style="background: rgb(0, 0, 0);"><div class="bonus-neon-flow" aria-hidden="true"><canvas class="bonus-neon-flow-canvas"></canvas></div><div class="container mobile-container-standard" style="max-width: 1200px; margin: 0px auto;"><h2 class="hidden md:block bonus-title-desktop"><span class="bonus-title-line">AL CONSEGUIR EL MANUAL AHORA,<br>TE LLEVAS <span class="text-gradient-orange font-bold" style="font-family: var(--font-title);">3 BONOS EXCLUSIVOS</span></span></h2><div class="hidden md:block bonus-subtitle-desktop" style="text-transform: none;">Para proteger tus compras y eliminar sorpresas antes de pagar.</div><div class="md:hidden mb-8"><h2 class="text-white bonus-mobile-pad text-center" style="font-size: 26px; margin-bottom: 0px; line-height: 1.2; font-family: &quot;Space Grotesk&quot;, sans-serif; text-transform: uppercase; display: block; width: 100%;">AL CONSEGUIR EL MANUAL AHORA, TE LLEVAS <br><span class="mobile-green-highlight text-gradient-orange font-bold">3 BONOS EXCLUSIVOS</span></h2><p class="section-subtitle-standard bonus-mobile-pad" style="margin-top: 8px;">Para proteger tus compras y eliminar sorpresas antes de pagar.</p></div><div class="bonus-cards-container" style="max-width: 100%; margin-top: clamp(48px, 8vw, 64px);"><div class="
                 group bonus-card bonus-card-refined
                 w-full max-w-[1000px] mx-auto
                 p-8 rounded-[12px]
@@ -3348,10 +3348,17 @@
     lightIntensity: 150
   };
 
+  const BONUS_NEON_OPTIONS = {
+    tubeColors: ["#ff6a00", "#ff7a00", "#faa429"],
+    lightColors: ["#ff6a00", "#ffb000", "#ff3d00", "#fff1d0"],
+    lightIntensity: 135
+  };
+
   class OfferNeonFlowEffect {
-    constructor(container) {
+    constructor(container, options = OFFER_NEON_OPTIONS) {
       this.container = container;
-      this.canvas = container ? container.querySelector(".offer-neon-flow-canvas") : null;
+      this.canvas = container ? container.querySelector("canvas") : null;
+      this.options = options;
       this.app = null;
       this.destroyed = false;
       this.motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -3372,10 +3379,10 @@
         const TubesCursor = module.default;
         this.app = TubesCursor(this.canvas, {
           tubes: {
-            colors: OFFER_NEON_OPTIONS.tubeColors,
+            colors: this.options.tubeColors,
             lights: {
-              intensity: OFFER_NEON_OPTIONS.lightIntensity,
-              colors: OFFER_NEON_OPTIONS.lightColors
+              intensity: this.options.lightIntensity,
+              colors: this.options.lightColors
             }
           }
         });
@@ -3394,14 +3401,14 @@
     }
   }
 
-  function mountOfferNeonFlow() {
-    const section = document.querySelector("#promo-card-section");
-    const container = section ? section.querySelector(".offer-neon-flow") : null;
+  function mountNeonFlowSection(selector, containerSelector, options) {
+    const section = document.querySelector(selector);
+    const container = section ? section.querySelector(containerSelector) : null;
     if (!section || !container) return;
 
     const start = () => {
       if (container.dataset.motion) return;
-      const effect = new OfferNeonFlowEffect(container);
+      const effect = new OfferNeonFlowEffect(container, options);
       effect.init();
     };
 
@@ -3422,6 +3429,11 @@
     );
 
     observer.observe(section);
+  }
+
+  function mountOfferNeonFlow() {
+    mountNeonFlowSection("#promo-card-section", ".offer-neon-flow", OFFER_NEON_OPTIONS);
+    mountNeonFlowSection("#bonus-section", ".bonus-neon-flow", BONUS_NEON_OPTIONS);
   }
 
   if (document.readyState === "loading") {
@@ -3544,6 +3556,49 @@
     font-size: 13px;
     max-width: 76%;
     margin-top: 8px;
+  }
+</style>
+<style id="manual-antifraude-bonus-neon-flow-fix">
+  .bonus-section {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .bonus-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 10%, rgba(255, 106, 0, 0.16), transparent 38%),
+      linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.72) 100%);
+  }
+
+  .bonus-section > .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .bonus-neon-flow {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.72;
+  }
+
+  .bonus-neon-flow-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;
+  }
+
+  .bonus-neon-flow[data-motion="reduced"],
+  .bonus-neon-flow[data-motion="failed"] {
+    display: none;
   }
 </style>
 <style id="manual-antifraude-bonus-checklist-fix">
@@ -4290,8 +4345,6 @@
   });
 })();
 </script></body></html>
-
-
 
 
 

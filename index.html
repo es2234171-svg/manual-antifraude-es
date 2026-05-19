@@ -3294,6 +3294,65 @@
     }
   }
 </style>
+<style id="manual-antifraude-global-neon-flow-lite">
+  section:not(.hero-section):not(#bonus-section):not(#promo-card-section) {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  section:not(.hero-section):not(#bonus-section):not(#promo-card-section)::before {
+    content: "";
+    position: absolute;
+    inset: -28%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
+    background:
+      radial-gradient(ellipse at 18% 24%, rgba(255, 106, 0, 0.26), transparent 34%),
+      radial-gradient(ellipse at 82% 18%, rgba(250, 164, 41, 0.2), transparent 30%),
+      conic-gradient(from 120deg at 50% 50%, transparent 0deg, rgba(255, 106, 0, 0.18) 58deg, transparent 118deg, rgba(255, 176, 0, 0.14) 188deg, transparent 260deg, rgba(255, 61, 0, 0.13) 330deg, transparent 360deg);
+    filter: blur(34px);
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1.05);
+    animation: globalNeonFlowDrift 18s ease-in-out infinite alternate;
+    will-change: transform, opacity;
+  }
+
+  section:not(.hero-section):not(#bonus-section):not(#promo-card-section) > :not(style):not(script) {
+    position: relative;
+    z-index: 1;
+  }
+
+  @keyframes globalNeonFlowDrift {
+    0% {
+      opacity: 0.22;
+      transform: translate3d(-2.5%, -1.5%, 0) rotate(0deg) scale(1.04);
+    }
+    50% {
+      opacity: 0.34;
+      transform: translate3d(2%, 1%, 0) rotate(9deg) scale(1.09);
+    }
+    100% {
+      opacity: 0.27;
+      transform: translate3d(1.5%, -2%, 0) rotate(-7deg) scale(1.06);
+    }
+  }
+
+  @media (max-width: 768px) {
+    section:not(.hero-section):not(#bonus-section):not(#promo-card-section)::before {
+      opacity: 0.22;
+      filter: blur(28px);
+      animation-duration: 24s;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    section:not(.hero-section):not(#bonus-section):not(#promo-card-section)::before {
+      animation: none !important;
+      opacity: 0.16;
+    }
+  }
+</style>
 <style id="manual-antifraude-legal-footer-fix">
   .legal-footer-text {
     max-width: 920px;
@@ -4345,7 +4404,6 @@
   });
 })();
 </script></body></html>
-
 
 
 
